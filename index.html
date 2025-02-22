@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="LEVEL ESTATE - агентство недвижимости, предлагающее широкий выбор объектов для покупки, продажи и аренды.">
+    <meta name="keywords" content="недвижимость, покупка, аренда, продажа, квартиры, дома, офисы">
+    <meta name="author" content="LEVEL ESTATE">
+    <title>LEVEL ESTATE - Агентство недвижимости</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: url('https://i.imgur.com/rFL8545_d.png?maxwidth=520&shape=thumb&fidelity=high') no-repeat left center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+            background-size: contain;
+            background-position: left center;
+        }
+        header img {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 100px;
+            filter: none;
+        }
+        header h1 {
+            font-size: 60px;
+            color: #001f3f;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            font-weight: 300;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #005599;
+            margin: 0;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background-color 0.3s, transform 0.4s ease-out, color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background-color: #0077cc;
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+        nav ul li a:focus {
+            background-color: #0077cc;
+            transform: scale(1.05);
+        }
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: white;
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #001f3f;
+        }
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333333;
+        }
+        .cta-button {
+            background-color: #ff5722;
+            padding: 15px 30px;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .cta-button:hover {
+            background-color: #e64a19;
+        }
+        .cta-button:focus {
+            outline: 2px solid #ff5722;
+            outline-offset: 4px;
+        }
+        .content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .properties {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .property-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: left;
+        }
+        .property-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .property-card h3 {
+            font-size: 24px;
+            margin: 15px 0 10px;
+        }
+        .property-card p {
+            font-size: 16px;
+            color: #666;
+        }
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        footer ul li {
+            margin: 0 10px;
+        }
+        footer ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        footer ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Медиазапросы для мобильных устройств */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 40px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .properties {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .menu-toggle {
+                display: block;
+                background-color: #005599;
+                color: white;
+                border: none;
+                font-size: 30px;
+            }
+
+            .menu {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .menu.show {
+                display: flex;
+            }
+        }
+
+        /* Стили для нового всплывающего окна */
+        .popup {
+            display: none;
+            position: fixed;
+            bottom: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        .popup p {
+            font-size: 18px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .popup-close {
+            display: block;
+            margin-top: 15px;
+            background-color: #ff5722;
+            padding: 10px 20px;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .popup-close:hover {
+            background-color: #e64a19;
+        }
+
+        /* Анимация для всплывающего окна */
+        @keyframes slideUp {
+            from {
+                bottom: -200px;
+            }
+            to {
+                bottom: 20px;
+            }
+        }
+
+        /* Стиль для окна информации о компании */
+        .info-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+			
+        }
+
+        .info-popup h2 {
+            margin-top: 0;
+        }
+
+        .info-popup p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .info-popup-close {
+            margin-top: 20px;
+            background-color: #ff5722;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .info-popup-close:hover {
+            background-color: #e64a19;
+        }
+
+        /* Добавленная анимация для кнопки "О нас" */
+        nav ul li a#about-us-btn {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        nav ul li a#about-us-btn:hover {
+            transform: scale(1.1);
+            color: #ff5722;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://i.imgur.com/rFL8545_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="LEVEL ESTATE Logo">
+        <h1>LEVEL ESTATE</h1>
+    </header>
+    <nav>
+        <ul class="menu">
+            <li><a href="#"><span>Главная</span></a></li>
+            <li><a href="#" id="about-us-btn"><span>О нас</span></a></li>
+            <li><a href="#" id="contact-btn"><span>Контакты (WhatsApp, Viber)</span></a></li>
+        </ul>
+    </nav>
+    <section class="hero">
+        <h1>Найдите свой идеальный дом с LEVEL ESTATE</h1>
+        <p>Профессиональные услуги по покупке, продаже и аренде недвижимости</p>
+        <a href="https://www.instagram.com/level_estate_arm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="cta-button" target="_blank">Связаться с нами</a>
+    </section>
+    <section class="content">
+        <h2>Наши предложения</h2>
+        <p>Мы предлагаем широкий выбор объектов недвижимости, соответствующих вашим потребностям и бюджету.</p>
+        <div class="properties">
+            <div class="property-card">
+                <img src="https://www.mirlandshaft.ru/wp-content/uploads/2017/04/dizajn-interera-odnokomnatnoj-kvartiry7.jpg" alt="Квартира в центре города">
+                <h3>Квартира в центре города</h3>
+                <p>Просторная квартира с современным дизайном, расположенная в самом сердце города.           250,000$</p>
+            </div>
+            <div class="property-card">
+                <img src="https://tehace.ru/assets/jodob-fo-764x859.jpg" alt="Уютный загородный дом">
+                <h3>Уютный загородный дом</h3>
+                <p>Идеальное место для отдыха с семьей, окруженное живописной природой.          185.000$</p>
+            </div>
+            <div class="property-card">
+                <img src="https://cashpo-design.ru/userfiles/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/style-ofic1.jpg" alt="Современный офис">
+                <h3>Современный офис</h3>
+                <p>Офисное помещение с удобным расположением и всеми необходимыми удобствами.         85.000$</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Всплывающее окно для информации о нас -->
+    <div class="info-popup" id="info-popup">
+        <h2>О компании LEVEL ESTATE</h2>
+        <p>LEVEL ESTATE - это агентство недвижимости, которое предоставляет услуги по покупке, продаже и аренде жилья, коммерческих объектов и земельных участков. Мы ориентированы на предоставление качественных услуг и индивидуальный подход к каждому клиенту. Наша цель - помочь вам найти идеальное место для жизни или бизнеса!</p>
+        <button class="info-popup-close" onclick="closeInfoPopup()">Закрыть</button>
+    </div>
+
+    <!-- Всплывающее окно для номера телефона -->
+    <div class="popup" id="popup">
+        <p>Номер для связи: +37433202024 (WhatsApp, Viber)</p>
+        <button class="popup-close" onclick="closePopup()">Закрыть</button>
+    </div>
+
+    <!-- Отзывы клиентов -->
+    <section class="content">
+        <h2>Отзывы наших клиентов</h2>
+        <div class="testimonials">
+            <div class="testimonial-card">
+                <p>"Парни помогли мне найти идеальное место для проживания. Профессиональный подход и отличный сервис!"</p>
+                <p>- Арман Кочарян</p>
+            </div>
+            <div class="testimonial-card">
+                <p>"Рекомендую ВСЕМ! Все прошло быстро и легко. Команда действительно заботится о клиентах!"</p>
+                <p>- Нона Карапетян</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Часто задаваемые вопросы -->
+    <section class="content">
+        <h2>Часто задаваемые вопросы</h2>
+        <ul>
+            <li><strong>Как я могу найти подходящую недвижимость?</strong>
+                <p>Наши агенты помогут вам выбрать недвижимость, которая соответствует вашим пожеланиям и бюджету.</p>
+            </li>
+            <li><strong>Какова комиссия за услуги агентства?</strong>
+                <p>Комиссия зависит от типа сделки, и мы всегда заранее оговариваем все условия.</p>
+            </li>
+            <li><strong>Как оформить аренду недвижимости?</strong>
+                <p>Наши специалисты помогут вам с документами и процессом аренды, чтобы все прошло гладко.</p>
+            </li>
+        </ul>
+    </section>
+	<section class="content">
+    <h2>Наши сотрудники</h2>
+    <div class="team">
+        <div class="team-member">
+            <img src="https://i.imgur.com/Jd1Q5aw.jpg" alt="Сотрудник LEVEL ESTATE">
+            <h3>Սուսի Խաչատրյան</h3>
+            <p>Менеджер по недвижимости с многолетним опытом. Поможет вам найти идеальный дом.</p>
+        </div>
+        <div class="team-member">
+            <img src="https://i.imgur.com/dZUJC3X_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="Сотрудник">
+            <h3>Հասմիկ Հովհաննիսյան</h3>
+            <p>Специалист по недвижимости. Профессиональный подход и внимание к деталям.</p>
+        </div>
+		<div class="team-member">
+            <img src="https://i.imgur.com/OoEv2zC_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="Сотрудник">
+            <h3>Էդվարդ Սահակյան</h3>
+            <p>Специалист по аренде недвижимости. Индивидуальный подход ко всем.</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.team {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.team-member {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 250px;
+}
+.team-member img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.team-member h3 {
+    font-size: 22px;
+    margin-top: 15px;
+}
+.team-member p {
+    font-size: 16px;
+    color: #666;
+}
+</style>
+
+
+    <!-- Карта -->
+    <section class="content">
+        <h2>Наш офис на карте</h2>
+        <img src="https://i.imgur.com/qdkg8UH_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Карта">
+    </section>
+
+    <footer>
+        <ul>
+            <li><a href="#">Политика конфиденциальности</a></li>
+            <li><a href="#">Условия использования</a></li>
+            <li><a href="#">Карта сайта</a></li>
+        </ul>
+        <p>&copy; 2025 LEVEL ESTATE</p>
+    </footer>
+
+    <script>
+        // Открытие и закрытие всплывающего окна для номера телефона
+        document.getElementById('contact-btn').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('popup').style.display = 'block';
+        });
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Открытие и закрытие окна информации о компании
+        document.getElementById('about-us-btn').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('info-popup').style.display = 'block';
+        });
+
+        function closeInfoPopup() {
+            document.getElementById('info-popup').style.display = 'none';
+        }
+    </script>
+	
+</body>
+</html>
